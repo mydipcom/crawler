@@ -1,0 +1,21 @@
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="org.com.product">
+	<class name="MrProduct">
+		<id name="id">
+			<generator class="native"></generator>
+		</id>
+		<property name="prodid"></property>
+		<property name="pname"></property>
+		<property name="price"></property>
+		<property name="pbrand"></property>
+		<property name="pcat"></property>
+		<property name="url"></property>
+		<property name="image" length="1000"></property>
+		<property name="editor_note" length="1000"></property>
+		<property name="size_fit" length="1000"></property>
+		<property name="details_care" length="1000"></property>
+		<property name="createtime" type="java.lang.Long"></property>
+		
+	</class>
+
+</hibernate-mapping>
