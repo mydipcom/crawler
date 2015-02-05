@@ -367,8 +367,7 @@ public class MirrorWriterProcessor extends Processor {
     	   logger.info(uuri.toString());
        }
        
-    
-        // Only http and https schemes are supported.
+       // Only http and https schemes are supported.
         
         /*String scheme = uuri.getScheme();
         if (!"http".equalsIgnoreCase(scheme)

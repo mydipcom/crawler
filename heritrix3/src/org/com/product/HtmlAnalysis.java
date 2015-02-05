@@ -355,7 +355,9 @@ public static void getMrProduct(String html,String url){
 			}
 		}
 	}
-	
+	if(editor_note.isEmpty()){
+		return;
+	}
 	
 	element = page.getElementById("product-carousel");
     for(Element ele : element.getElementsByTag("img")){
@@ -407,7 +409,7 @@ public static void extractInformation(String html,String url){
     	 getProductInfo(html, url);
      }else if(url.contains("http://www.net-a-porter.com/product/")){
     	 getNapProduct(html,url);
-     }else if(Pattern.compile("http://www.mrporter.com/en-cn/mens/.*(/\\d{6})$").matcher(url).find()){
+     }else if(Pattern.compile("http://www.mrporter.com/en-cn/mens/.*(/\\d{6}).*").matcher(url).find()){
     	 getMrProduct(html, url);
      }
 		

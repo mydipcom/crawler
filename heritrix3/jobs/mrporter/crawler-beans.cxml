@@ -161,8 +161,8 @@ metadata.description=mrporter
          <property name="regexList">
            <list>
               <value>http://www.mrporter.com/</value>
-              <value>http://www.mrporter.com/en-cn/mens/(?!.*?(designerFilter|colourFilter|SizeFilter)).*([^\.js|\.png|\.jpg|\.css|\.gif|\.start|\.mp4])$</value>
-              <value>/en-cn/mens/(?!.*?(designerFilter|colourFilter|SizeFilter)).*([^\.js|\.png|\.jpg|\.css|\.gif|\.start|\.mp4])$</value>
+              <value>http://www.mrporter.com/en-cn/mens/(?!.*?(designerFilter|colourFilter|sizeFilter)).*([^\.js|\.png|\.jpg|\.css|\.gif|\.start|\.mp4])$</value>
+              <value>/en-cn/mens/(?!.*?(designerFilter|colourFilter|sizeFilter)).*([^\.js|\.png|\.jpg|\.css|\.gif|\.start|\.mp4])$</value>
             </list>
           </property>
     </bean>
