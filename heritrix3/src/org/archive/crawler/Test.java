@@ -61,7 +61,7 @@ public class Test {
 			}*/
 			
 			//System.out.println(element.ownText());
-			String pageStr = page.toString();
+			/*String pageStr = page.toString();
 			int epcat = pageStr.indexOf("ecomm_pcat");
 			int epid = pageStr.indexOf("ecomm_prodid");
 			int epva = pageStr.indexOf("ecomm_pvalue");
@@ -77,7 +77,7 @@ public class Test {
             
 		    for(Element ele:elements){
 		    	System.out.println(ele.children().get(0).text());
-		    }
+		    }*/
 		    
 		  
 		    

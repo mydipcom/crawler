@@ -33,11 +33,11 @@ public class  HtmlAnalysis{
 	String promotionPrice="";
 	String netPrice="";
 	String productCatagory="";
-	//
+	
 	Document productInfo = Jsoup.parse(html);
 	if(url.contains("http://www.suning.com/emall/cprd_")){
 		vendor=url.split("_")[3];
-	
+	    System.out.println("=======================");
 		element = productInfo.getElementById("productInfoUl");
 		 partNumber="000000000"+element.getElementsByTag("li").get(0).text().replaceAll("商品编码", "").trim();
 		//name

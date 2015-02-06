@@ -53,7 +53,7 @@ metadata.description=suning
    <props>
     <prop key="seeds.textSource.value">
     # URLS HERE
-    http://product.suning.com/
+    http://www.suning.com/
 
     </prop>
    </props>

@@ -51,9 +51,10 @@ public class ExtractorHTTP extends Extractor {
 
     @Override
     protected boolean shouldProcess(CrawlURI uri) {
-        if (uri.getFetchStatus() <= 0) {
+    	if (uri.getFetchStatus() <= 0) {
             return false;
         }
+    	
         FetchType ft = uri.getFetchType();
         return (ft == FetchType.HTTP_GET) || (ft == FetchType.HTTP_POST);
     }
