@@ -186,7 +186,7 @@ public class Heritrix {
      */
     public static void main(String[] args) 
     throws Exception {
-        new Heritrix().instanceMain(args); 
+    	new Heritrix().instanceMain(args); 
     }
     
     public void instanceMain(String[] args)

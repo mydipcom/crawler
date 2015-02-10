@@ -1,0 +1,23 @@
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="org.com.product">
+	<class name="MiLanProduct">
+		<id name="id">
+			<generator class="native"></generator>
+		</id>
+		<property name="pid"></property>
+		<property name="pname"></property>
+		<property name="price"></property>
+		<property name="mktprice"></property>
+		<property name="discount"></property>
+		<property name="brand"></property>
+		<property name="category"></property>
+		<property name="url"></property>
+		<property name="image" length="1000"></property>
+		<property name="stock"></property>
+		<property name="details" length="1000"></property>
+		<property name="introduction" length="1000"></property>
+		<property name="createtime" type="java.lang.Long"></property>
+		
+	</class>
+
+</hibernate-mapping>

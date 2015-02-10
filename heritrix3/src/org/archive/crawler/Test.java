@@ -16,10 +16,45 @@ import org.jsoup.select.Elements;
 public class Test {
 	public static void main(String arg[]){
 		Element element;
+		Elements elements;
 		String image = "";
 		try {
-			Document page = Jsoup.connect("http://www.mrporter.com/en-cn/mens/gucci/lightly-padded-poplin-bomber-jacket/396321").timeout(10000).get();
+			Document page = Jsoup.connect("http://www.milanstation.cc/product-4385.html").timeout(10000).get();
+			String html = page.toString();
+			int start = html.indexOf("/*分类名*/");
+			int end = html.indexOf(",", start);
+			
+			System.out.println(html.substring(start+10, end-1));
+			
+			start = html.indexOf("/*品牌名*/",start);
+		    end = html.indexOf(",", start);
+		    System.out.println(html.substring(start+9, end-1));
+		    
+	        start = html.indexOf("/*商品库存状态1或是0*/",start);
+		    end = html.indexOf(",", start);
+		    System.out.println(html.substring(start+16, end-1));
+		    elements = page.getElementsByClass("goodsname");
+		    System.out.println(elements.get(0).text());
+		    elements = page.getElementsByClass("goods_bn");
+		    System.out.println(elements.get(0).ownText());
+		    elements = page.getElementsByClass("price1");
+		    System.out.println(elements.get(1).text().replace("￥", ""));
+		    elements = page.getElementsByClass("mktprice1");
+		    System.out.println(elements.get(0).text().replace("￥", ""));
+		    elements = page.getElementsByClass("pics").get(0).getElementsByTag("img");
+		    for(Element ele : elements){
+		    	//System.out.println(ele.attr("src"));
+		    }
+		    elements = page.getElementsByClass("detail_specification");
+		    for(Element td : elements.get(0).getElementsByTag("td"))
+		    {
+		    	System.out.println(td.text());
+		    	
+		    }
+		    elements = page.getElementsByClass("pdtdetail");
+		    System.out.println(elements.get(1).text());
 			/*element = page.getElementById("product-details");
+			
 			element.attr("data-pid");
 			element.attr("data-name");
 			element.attr("data-price");

@@ -364,7 +364,7 @@ public class MirrorWriterProcessor extends Processor {
        }else if(uri.contains("http://www.mrporter.com/")){
     	   logger.info(uuri.toString());
        }
-       
+       logger.info(uuri.toString());
        // Only http and https schemes are supported.
         
         /*String scheme = uuri.getScheme();
