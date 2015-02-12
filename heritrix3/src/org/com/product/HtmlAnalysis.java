@@ -37,8 +37,7 @@ public class  HtmlAnalysis{
 	Document productInfo = Jsoup.parse(html);
 	if(url.contains("http://www.suning.com/emall/cprd_")){
 		vendor=url.split("_")[3];
-	    System.out.println("=======================");
-		element = productInfo.getElementById("productInfoUl");
+	    element = productInfo.getElementById("productInfoUl");
 		 partNumber="000000000"+element.getElementsByTag("li").get(0).text().replaceAll("商品编码", "").trim();
 		//name
         Elements elements = productInfo.getElementsByClass("product-main-title");
@@ -412,8 +411,6 @@ public static void getMiLanProduct(String html,String url){
 	
 	 float mktprice;
 	
-	 float discount;
-	
 	 String brand;
 	
 	 String category;
@@ -421,7 +418,9 @@ public static void getMiLanProduct(String html,String url){
 	 String image="";
 	
 	 int stock=0;
-	
+	 
+	 int grade = 1;
+	 
 	 String details="";
 	
 	 String introduction;
@@ -464,6 +463,9 @@ public static void getMiLanProduct(String html,String url){
     for(Element td : elements.get(0).getElementsByTag("td"))
     {
     	details += td.text()+"#*#";
+    	if(td.text().contains("新旧程度")){
+    		grade = 0;
+    	}
     }
     details = details.substring(0, details.length()-3);
     
@@ -485,6 +487,7 @@ public static void getMiLanProduct(String html,String url){
    	miLanProduct.setPrice(price);
    	miLanProduct.setDiscount(price-mktprice);
    	miLanProduct.setStock(stock);
+   	miLanProduct.setGrade(grade);
    	miLanProduct.setImage(image);
    	miLanProduct.setUrl(url);
    	miLanProduct.setDetails(details);

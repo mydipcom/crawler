@@ -7,9 +7,7 @@ package org.com.product;
  */
 public class MiLanProduct {
 	
-   
-
-	private int id;
+    private int id;
 	
 	private String pid;
 	
@@ -30,6 +28,8 @@ public class MiLanProduct {
 	private String image;
 	
 	private int stock;
+	
+	private int grade;
 	
 	private String details;
 	
@@ -120,7 +120,15 @@ public class MiLanProduct {
 	public int getStock() {
 		return stock;
 	}
+    
+	public int getGrade() {
+		return grade;
+	}
 
+	public void setGrade(int grade) {
+		this.grade = grade;
+	}
+	
 	public void setStock(int stock) {
 		this.stock = stock;
 	}
