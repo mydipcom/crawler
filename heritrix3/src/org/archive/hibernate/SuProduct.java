@@ -1,4 +1,4 @@
-package org.com.product;
+package org.archive.hibernate;
 
 public class SuProduct {
 	private int id;

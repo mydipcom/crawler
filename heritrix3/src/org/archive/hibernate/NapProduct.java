@@ -1,4 +1,4 @@
-package org.com.product;
+package org.archive.hibernate;
 
 /**
  * @author silvasong E-mail:silvasong@campray.com

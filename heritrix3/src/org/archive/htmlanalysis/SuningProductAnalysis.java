@@ -1,10 +1,11 @@
- package org.com.product;
+package org.archive.htmlanalysis;
 
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.regex.Pattern;
 
-import org.hibernate.SessionFactory;
+import org.archive.hibernate.HibernateBase;
+import org.archive.hibernate.SuProduct;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
@@ -12,12 +13,17 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class  HtmlAnalysis{
-
+/**
+ * @author silvasong E-mail:silvasong@campray.com
+ * @version 2015年3月2日 下午4:07:36
+ * 
+ */
+public class SuningProductAnalysis {
+	
 	private static String cityId = "9051";
 	private static String clientType = "1";
     
-    public static void getProductInfo(String html,String url) throws IOException, JSONException {
+    public static void getSuningProduct(String html,String url) throws IOException, JSONException {
 	// TODO Auto-generated method stub
 	JSONObject jsonObject;
 	Element element;
@@ -250,282 +256,6 @@ public class  HtmlAnalysis{
 	}else{
 		HibernateBase.save(product);
 	}
-}
-
-public static void getNapProduct(String html,String url) throws IOException{
-	
-     String pid;
-	
-	 String name;
-	
-	 String price;
-	
-	 String brand;
-	
-	 String category;
-	
-	 String image="";
-	
-	 String description;
-	
-	 Element element;
-     
-	   // Document page = Jsoup.connect(Url).timeout(10000).get();
-	    Document page =Jsoup.parse(html);
-	    element = page.getElementById("product-details");
-		pid=element.attr("data-pid");
-		name=element.attr("data-name");
-		price=element.attr("data-price");
-		brand=element.attr("data-brand");
-		category=element.attr("data-category");
-	    element = page.getElementById("editors-notes-content");
-	    description = element.text();
-		element = page.getElementById("thumbnails-container");
-		Elements images = element.getElementsByTag("meta");
-		for(int i=0 ; i<images.size();i++){
-			image+=images.get(i).attr("content")+"#";
-		}
-		
-		String hql="from NapProduct as nap where nap.pid="+pid;
-		boolean flag = true;
-		NapProduct nPro = (NapProduct)HibernateBase.getById(hql);
-		if(nPro == null){
-			nPro = new NapProduct();
-			flag=false;
-		}
-		nPro.setBrand(brand);
-		nPro.setPid(pid);
-		nPro.setName(name);
-		nPro.setPrice(Float.parseFloat(price.replace("USD", "")));
-		nPro.setImage(image);
-		nPro.setDescription(description);
-		nPro.setUrl(url);
-		nPro.setCategory(category);
-		nPro.setCreatetime(System.currentTimeMillis());
-		if(flag){
-			HibernateBase.update(nPro);
-		}else{
-			HibernateBase.save(nPro);
-		}
-}
-
-public static void getMrProduct(String html,String url){
-	
-    String prodid;
-	
-	String pname;
-	
-	String pbrand;
-	
-	String pcat;
-
-	float price;
-	
-    String image="";
-	
-    String editor_note="";
-    
-    String size_fit="";
-	
-	String details_care="";
-	
-	Element element;
-	
-	Elements elements;
-	
-	Document page =Jsoup.parse(html);
-	elements = page.getElementsByClass("productDescription");
-	for(Element pd : elements){
-		if("Editors' Notes".equals(pd.child(0).text())){
-			editor_note = pd.child(1).text();
-		}else if("Size & Fit".equals(pd.child(0).text())){
-			for(Element sf : pd.child(1).getElementsByTag("li")){
-				size_fit += sf.text()+"#";
-			}
-			if(!size_fit.isEmpty()){
-				size_fit=size_fit.substring(0, size_fit.length()-1);
-			}
-		}else if("Details & Care".equals(pd.child(0).text())){
-			for(Element dc : pd.child(1).getElementsByTag("li")){
-				details_care += dc.text()+"#";
-			}
-			if(!details_care.isEmpty()){
-				details_care=details_care.substring(0, details_care.length()-1);
-			}
-		}
-	}
-	if(editor_note.isEmpty()){
-		return;
-	}
-	
-	element = page.getElementById("product-carousel");
-    for(Element ele : element.getElementsByTag("img")){
-    	if(ele.attr("src").endsWith(".jpg")){
-    		image += "http:"+ele.attr("src")+"#";
-    	}
-    }
-    image = image.substring(0, image.length()-1).replaceAll("xs", "l");
-    String pageStr = page.toString();
-    int epcat = pageStr.indexOf("ecomm_pcat");
-	int epid = pageStr.indexOf("ecomm_prodid");
-	int epva = pageStr.indexOf("ecomm_pvalue");
-	pcat = pageStr.substring(pageStr.indexOf("['",epcat)+2,pageStr.indexOf("']",epcat));
-	prodid = pageStr.substring(pageStr.indexOf("[",epid)+1,pageStr.indexOf("]",epid));
-	price = Float.parseFloat(pageStr.substring(pageStr.indexOf("[",epva)+1,pageStr.indexOf("]",epva)));
-	element = page.getElementById("product-details");
-	pbrand = element.getElementsByTag("h1").get(0).text();
-	pname = element.getElementsByTag("h4").get(0).text();
-    String hql="from MrProduct as mr where mr.prodid="+prodid;
-	boolean flag = true;
-	MrProduct mrProduct = (MrProduct) HibernateBase.getById(hql);
-	if(mrProduct == null){
-		mrProduct = new MrProduct();
-		flag = false;
-	}
-	mrProduct.setProdid(prodid);
-	mrProduct.setPname(pname);
-	mrProduct.setPbrand(pbrand);
-	mrProduct.setPcat(pcat);
-	mrProduct.setPrice(price);
-	mrProduct.setImage(image);
-	mrProduct.setUrl(url);
-	mrProduct.setEditor_note(editor_note);
-	mrProduct.setSize_fit(size_fit);
-	mrProduct.setDetails_care(details_care);
-	mrProduct.setCreatetime(System.currentTimeMillis());
-	if(flag){
-		HibernateBase.update(mrProduct);
-	}else{
-		HibernateBase.save(mrProduct);
-	}
-	
-}
-
-public static void getMiLanProduct(String html,String url){
-    
-	 String pid;
-	
-	 String pname;
-	
-	 float price;
-	
-	 float mktprice;
-	
-	 String brand;
-	
-	 String category;
-	
-	 String image="";
-	
-	 int stock=0;
-	 
-	 int grade = 1;
-	 
-	 String details="";
-	
-	 String introduction;
-	 
-   
-	 Elements elements;
-	 Document page =Jsoup.parse(html);
-	
-	int start = html.indexOf("/*分类名*/");
-	int end = html.indexOf(",", start);
-	category=html.substring(start+10, end-1);
-	
-	start = html.indexOf("/*品牌名*/",start);
-    end = html.indexOf(",", start);
-    brand=html.substring(start+9, end-1);
-    
-    start = html.indexOf("/*商品库存状态1或是0*/",start);
-    end = html.indexOf(",", start);
-    stock=Integer.parseInt(html.substring(start+16, end-1));
-    
-    elements = page.getElementsByClass("goodsname");
-    pname = elements.get(0).text();
-    
-    elements = page.getElementsByClass("goods_bn");
-    pid = elements.get(0).ownText();
-    
-    elements = page.getElementsByClass("price1");
-    mktprice = Float.parseFloat(elements.get(1).text().replace("￥", ""));
-    
-    elements = page.getElementsByClass("mktprice1");
-    price = Float.parseFloat(elements.get(0).text().replace("￥", ""));
-    
-    elements = page.getElementsByClass("pics").get(0).getElementsByTag("img");
-    for(Element ele : elements){
-    	image += ele.attr("src")+"#";
-    }
-    image = image.substring(0,image.length()-1);
-    
-    elements = page.getElementsByClass("detail_specification");
-    for(Element td : elements.get(0).getElementsByTag("td"))
-    {
-    	details += td.text()+"#*#";
-    	if(td.text().contains("新旧程度")){
-    		grade = 0;
-    	}
-    }
-    details = details.substring(0, details.length()-3);
-    
-    elements = page.getElementsByClass("pdtdetail");
-    introduction = elements.get(1).text();
-    
-    String hql="from MiLanProduct as milan where milan.pid='"+pid+"'";
-   	boolean flag = true;
-   	MiLanProduct miLanProduct = (MiLanProduct) HibernateBase.getById(hql);
-   	if(miLanProduct == null){
-   		miLanProduct = new MiLanProduct();
-   		flag = false;
-   	}
-   	miLanProduct.setPid(pid);
-   	miLanProduct.setPname(pname);
-   	miLanProduct.setCategory(category);
-   	miLanProduct.setBrand(brand);
-   	miLanProduct.setMktprice(mktprice);
-   	miLanProduct.setPrice(price);
-   	miLanProduct.setDiscount(price-mktprice);
-   	miLanProduct.setStock(stock);
-   	miLanProduct.setGrade(grade);
-   	miLanProduct.setImage(image);
-   	miLanProduct.setUrl(url);
-   	miLanProduct.setDetails(details);
-   	miLanProduct.setIntroduction(introduction);
-   	miLanProduct.setCreatetime(System.currentTimeMillis());
-   	
-   	if(flag){
-   		HibernateBase.update(miLanProduct);
-   	}else{
-   		HibernateBase.save(miLanProduct);
-   	}
-   	
-    
-    
-}
-
-
-public static void extractInformation(String html,String url){
-	 try {
-		 
-     if(url.contains("http://www.suning.com/emall/cprd_")||Pattern.compile("http\\://product\\.suning\\.com/\\d{10}/\\d{9}.html.*|http\\://product\\.suning\\.com/\\d{9}.html.*").matcher(url).find()){
-    	 getProductInfo(html, url);
-     }else if(url.contains("http://www.net-a-porter.com/product/")){
-    	 getNapProduct(html,url);
-     }else if(Pattern.compile("http://www.mrporter.com/en-cn/mens/.*(/\\d{6}).*").matcher(url).find()){
-    	 getMrProduct(html, url);
-     }else if(Pattern.compile("http://www.milanstation.cc/product-\\d*.html").matcher(url).find()){
-    	 getMiLanProduct(html, url);
-     }
-		
-	
-	} catch (IOException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	} catch (JSONException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	} 
 }
 
 }

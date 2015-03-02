@@ -28,8 +28,6 @@ import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import org.apache.commons.httpclient.URIException;
 import org.archive.io.ReplayCharSequence;
 import org.archive.modules.CrawlMetadata;
@@ -40,8 +38,6 @@ import org.archive.net.UURIFactory;
 import org.archive.util.DevUtils;
 import org.archive.util.TextUtils;
 import org.archive.util.UriUtils;
-import org.com.product.HtmlAnalysis;
-import org.json.JSONException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -691,10 +687,6 @@ public class ExtractorHTML extends ContentExtractor implements InitializingBean 
 
         try {
            ReplayCharSequence cs = curi.getRecorder().getContentReplayCharSequence();
-           
-           //Ertract product infomation
-           String url = curi.toString();
-           HtmlAnalysis.extractInformation(cs.toString(), url);
            
            // Extract all links from the charsequence
            extract(curi, cs);

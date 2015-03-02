@@ -14,12 +14,12 @@
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
         <property name="hibernate.hbm2ddl.auto">update</property>
         
-        <mapping resource="org/com/product/SuProduct.hbm.xml"/>
+        <mapping resource="org/archive/hibernate/SuProduct.hbm.xml"/>
         
-        <mapping resource="org/com/product/NapProduct.hbm.xml"/>
+        <mapping resource="org/archive/hibernate/NapProduct.hbm.xml"/>
         
-        <mapping resource="org/com/product/MrProduct.hbm.xml"/>
+        <mapping resource="org/archive/hibernate/MrProduct.hbm.xml"/>
         
-        <mapping resource="org/com/product/MiLanProduct.hbm.xml"/>
+        <mapping resource="org/archive/hibernate/MiLanProduct.hbm.xml"/>
      </session-factory>
 </hibernate-configuration>

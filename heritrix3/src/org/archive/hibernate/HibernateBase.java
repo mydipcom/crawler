@@ -1,4 +1,4 @@
-package org.com.product;
+package org.archive.hibernate;
 import java.util.List;
 
 import org.hibernate.Query;

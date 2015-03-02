@@ -339,7 +339,7 @@ metadata.description=milanstation
   
  <!-- DISPOSITION CHAIN -->
  <!-- first, processors are declared as top-level named beans  -->
- <bean id="warcWriter" class="org.archive.modules.writer.MirrorWriterProcessor">
+ <bean id="warcWriter" class="org.archive.modules.writer.PuductWriterProcessor">
   <!-- <property name="compress" value="true" /> -->
   <!-- <property name="prefix" value="IAH" /> -->
   <!-- <property name="suffix" value="${HOSTNAME}" /> -->
