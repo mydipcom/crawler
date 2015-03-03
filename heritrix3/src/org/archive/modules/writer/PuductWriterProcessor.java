@@ -37,6 +37,7 @@ public class PuductWriterProcessor extends Processor {
 			if(url.contains("http://www.suning.com/emall/cprd_")||Pattern.compile("http\\://product\\.suning\\.com/\\d{10}/\\d{9}.html.*|http\\://product\\.suning\\.com/\\d{9}.html.*").matcher(url).find()){
 		    	 SuningProductAnalysis.getSuningProduct(html, url);
 		    	 logger.info(curi.toString());
+		    	 
 		     }else if(url.contains("http://www.net-a-porter.com/product/")){
 		    	 NapProductAnalysis.getNapProduct(html, url);
 		    	 

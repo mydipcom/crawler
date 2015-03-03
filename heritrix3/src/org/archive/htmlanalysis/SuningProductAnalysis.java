@@ -27,6 +27,7 @@ public class SuningProductAnalysis {
 	// TODO Auto-generated method stub
 	JSONObject jsonObject;
 	Element element;
+	Elements elements;
 	int index;
 	String storeId="10052";
 	String catalogId="10051";
@@ -41,50 +42,51 @@ public class SuningProductAnalysis {
 	String productCatagory="";
 	
 	Document productInfo = Jsoup.parse(html);
+	
 	if(url.contains("http://www.suning.com/emall/cprd_")){
+		productInfo = Jsoup.connect(url).timeout(10000).get();
+		html = productInfo.toString();
 		vendor=url.split("_")[3];
-	    element = productInfo.getElementById("productInfoUl");
-		 partNumber="000000000"+element.getElementsByTag("li").get(0).text().replaceAll("商品编码", "").trim();
-		//name
-        Elements elements = productInfo.getElementsByClass("product-main-title");
-		productName=elements.text();
-		//vendor
-		element=productInfo.getElementById("curShopName");
-		if(element!=null){
-		shopName=element.text();
-		}
-		//params
-		element=productInfo.getElementById("canshu_box");
-		if (element != null) {
-			elements=element.getElementsByTag("table");
-			Iterator<Element> iterator = elements.iterator();
-			while (iterator.hasNext()) {
-				element = iterator.next();
-				Elements table = element.getElementsByTag("tr");
-				for(int i=0;i<table.size();i++){
-					element = table.get(i);
-					Elements td = element.getElementsByTag("td");
-					if(td.size() != 0){
-						productParam += td.get(0).getElementsByTag("span").text()+td.get(1).text()+"#*#";
+		partNumber="000000000"+url.split("_")[4];
+	       //产品名字
+		    elements = productInfo.getElementsByClass("proinfo-title");
+			productName=elements.get(0).child(0).text();
+		   //vendor
+			element = productInfo.getElementById("curShopName");
+			shopName = element.text();
+			//产品参数
+			element=productInfo.getElementById("itemParameter");
+			if (element != null) {
+			    elements=element.getElementsByTag("table");
+				Iterator<Element> iterator = elements.iterator();
+				while (iterator.hasNext()) {
+					element = iterator.next();
+					Elements table = element.getElementsByTag("tr");
+					for(int i=0;i<table.size();i++){
+						element = table.get(i);
+						Elements td = element.getElementsByTag("td");
+						if(td.size() != 0){
+							productParam += td.get(0).getElementsByTag("span").text()+"："+td.get(1).text()+"#*#";
+						}
 					}
+					
 				}
-				
+				productParam = productParam.substring(0,productParam.length()-3);
 			}
-			productParam = productParam.substring(0,productParam.length()-3);
-		}
-		//category
-		element = productInfo.getElementById("crumbs");
-		String str[]=element.text().split(">");
-		productCatagory=str[1]+">"+str[2]+">"+str[3];
-				
-		//images
-		element=productInfo.getElementById("preView_box");  
-		for(int i=0;i<element.select("img").size();i++){
-		if(!element.select("img").get(i).attr("src").isEmpty()){
-			imageLink+=element.select("img").get(i).attr("src")+"#";
-		}
-		
-		}
+					
+			//产品分类
+            int categoryName1 = html.indexOf("categoryName1");
+            int categoryName2 = html.indexOf("categoryName2");
+            int categoryName3 = html.indexOf("categoryName3");
+			productCatagory=html.substring(categoryName1, html.indexOf(",",categoryName1)).split(":")[1].replace("\"", "")+
+					">"+html.substring(categoryName2, html.indexOf(",",categoryName2)).split(":")[1].replace("\"", "")+
+					">"+html.substring(categoryName3, html.indexOf(",",categoryName3)).split(":")[1].replace("\"", "");
+					
+			//产品图片
+			elements=productInfo.getElementsByClass("imgzoom-thumb-main");  
+			for(int i=0;i<elements.select("img").size();i++){
+				imageLink += elements.select("img").get(i).attr("src-medium")+"#";
+			}
 		
 		}else if(Pattern.compile("http\\://product\\.suning\\.com/\\d{10}/\\d{9}.html.*").matcher(url).find()){
 		index=0;
@@ -101,7 +103,7 @@ public class SuningProductAnalysis {
 			shopName=jsonObject.getJSONArray("shopList").getJSONObject(0).getString("shopName");
 		}
 		//产品名字
-		Elements elements = productInfo.getElementsByClass("proinfo-title");
+	 elements = productInfo.getElementsByClass("proinfo-title");
 		productName=elements.get(0).child(0).text();
 				
 		//产品参数
@@ -152,7 +154,7 @@ public class SuningProductAnalysis {
 			shopName=jsonObject.getJSONArray("shopList").getJSONObject(0).getString("shopName");
 		}
 		//产品名称
-		Elements elements = productInfo.getElementsByClass("proinfo-title");
+	    elements = productInfo.getElementsByClass("proinfo-title");
 		productName=elements.get(0).child(0).text();
 		
 		
