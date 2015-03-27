@@ -19,8 +19,12 @@ public class Test {
 		Elements elements;
 		String image = "";
 		try {
-			Document page = Jsoup.connect("http://www.suning.com/emall/cprd_10052_10051_0070071501_121616077_.html").timeout(10000).get();
-			String html = page.toString();
+			Document page = Jsoup.connect("http://www.net-a-porter.com/product/535393").timeout(10000).get();
+			
+			elements = page.getElementsByClass("sold-out-is-coming-back");
+			System.out.println(elements.size());
+			/*String html = page.toString();
+			
 			int categoryName1 = html.indexOf("categoryName1");
 			
 			int categoryName2 = html.indexOf("categoryName2");
@@ -33,7 +37,7 @@ public class Test {
 			elements = page.getElementsByClass("proinfo-title");
 			System.out.println(elements.get(0).child(0).text());
 			element = page.getElementById("curShopName");
-			System.out.println(element.text());
+			System.out.println(element.text());*/
 //		    int start = html.indexOf("/*分类名*/");
 //			int end = html.indexOf(",", start);
 //			

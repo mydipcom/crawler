@@ -158,13 +158,13 @@ metadata.description=test
     <bean class="org.archive.modules.deciderules.NotMatchesListRegexDecideRule">
           <property name="decision" value="REJECT"/>
      <!--<property name="listLogicalOr" value="true" /> -->
-         <property name="regexList">
-            <list>
-              <value>http://www.net-a-porter.com/</value>
-              <value>http://www.net-a-porter.com/(Shop|product)(?!.*?(designerFilter|colourFilter|sizeFilter)).*([^\.js|\.png|\.JPG|\.css|\.gif|\.start|\.mp4|\a.top\-nav\-link])$</value>
-              <value>/(Shop|product)(?!.*?(designerFilter|colourFilter|sizeFilter)).*([^\.js|\.png|\.JPG|\.css|\.gif|\.start|\.mp4|\a.top\-nav\-link])$</value>
-            </list>
-          </property>
+      <property name="regexList">
+           <list>
+            <value>http://www.net-a-porter.com/</value>
+            <value>http://www.net-a-porter.com/(Shop|product|cn/en/Shop|cn/en/d/Shop|cn/en/product)(?!.*?(designerFilter|colourFilter|sizeFilter|0\.1\-315)).*([^\.js|\.png|\.JPG|\.css|\.gif|\.start|\.mp4|a\.top\-nav\-link])$</value>
+            <value>/(Shop|product|cn/en/Shop|cn/en/d/Shop|cn/en/product)(?!.*?(designerFilter|colourFilter|sizeFilter|0\.1\-315)).*([^\.js|\.png|\.JPG|\.css|\.gif|\.start|\.mp4|a\.top\-nav\-link])$</value>
+           </list>
+          </property> 
     </bean>
     
     <!-- ...and REJECT those with suspicious repeating path-segments... -->

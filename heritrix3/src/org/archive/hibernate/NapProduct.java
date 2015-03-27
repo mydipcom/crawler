@@ -25,9 +25,18 @@ public class NapProduct {
 	
 	private String description;
 	
+	private Integer sku;
+	
 	private Long createtime;
 	
-	
+	public Integer getSku() {
+			return sku;
+	}
+
+	public void setSku(Integer sku) {
+			this.sku = sku;
+	}
+		
 	public Long getCreatetime() {
 		return createtime;
 	}

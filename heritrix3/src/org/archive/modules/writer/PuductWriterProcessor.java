@@ -31,6 +31,7 @@ public class PuductWriterProcessor extends Processor {
 	protected void innerProcess(CrawlURI curi) throws InterruptedException {
 		// TODO Auto-generated method stub
 		String url = curi.toString();
+		 
 		try {
 			ReplayCharSequence cs = curi.getRecorder().getContentReplayCharSequence();
 			String html = cs.toString();
@@ -38,7 +39,7 @@ public class PuductWriterProcessor extends Processor {
 		    	 SuningProductAnalysis.getSuningProduct(html, url);
 		    	 logger.info(curi.toString());
 		    	 
-		     }else if(url.contains("http://www.net-a-porter.com/product/")){
+		     }else if(url.contains("http://www.net-a-porter.com/product/")||url.contains("http://www.net-a-porter.com/cn/en/product/")){
 		    	 NapProductAnalysis.getNapProduct(html, url);
 		    	 
 		     }else if(Pattern.compile("http://www.mrporter.com/en-cn/mens/.*(/\\d{6}).*").matcher(url).find()){

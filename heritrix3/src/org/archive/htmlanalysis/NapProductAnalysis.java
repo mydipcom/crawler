@@ -50,6 +50,19 @@ public class NapProductAnalysis {
 				image+=images.get(i).attr("content")+"#";
 			}
 			
+			boolean stock = true;
+			int  sku = 1;
+			Elements soldOut = page.getElementsByClass("sold-out-message");
+			Elements soldOutComing = page.getElementsByClass("sold-out-is-coming-back");
+			if(soldOut.size()!=0){
+				if(soldOutComing.size()!=0){
+					sku = 0;
+				}else{
+					sku = -1;
+				}
+				stock = false;
+			}
+			
 			String hql="from NapProduct as nap where nap.pid="+pid;
 			boolean flag = true;
 			NapProduct nPro = (NapProduct)HibernateBase.getById(hql);
@@ -65,6 +78,7 @@ public class NapProductAnalysis {
 			nPro.setDescription(description);
 			nPro.setUrl(url);
 			nPro.setCategory(category);
+			nPro.setSku(sku);
 			nPro.setCreatetime(System.currentTimeMillis());
 			if(flag){
 				HibernateBase.update(nPro);
