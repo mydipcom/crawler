@@ -2,6 +2,7 @@ package org.archive.htmlanalysis;
 
 import java.io.IOException;
 
+import org.archive.api.UswopAPI;
 import org.archive.hibernate.HibernateBase;
 import org.archive.hibernate.NapProduct;
 import org.jsoup.Jsoup;
@@ -85,6 +86,10 @@ public class NapProductAnalysis {
 			}else{
 				HibernateBase.save(nPro);
 			}
+			
+			/*if(flag){
+				UswopAPI.goodsManagement(pid, sku);
+			}*/
 	}
 
 }
